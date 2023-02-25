@@ -2,13 +2,20 @@ const loadPhones = async(searchText)=>{
     const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`
     const res = await fetch(url);
     const data = await res.json();
-    displayPhones(data.data.slice(0,5));
+    displayPhones(data.data);
 }
 
 const displayPhones = phones=>{
     const phonesContainer = document.getElementById('phones-container');
     phonesContainer.textContent = '';
     // phonesContainer.innerText = ''; (it also same as textContent that give us emty value)
+    // warning massege
+    const message = document.getElementById('warning-massege');
+    if(phones.length === 0){
+        message.classList.remove('d-none');
+    }else{
+        message.classList.add('d-none');
+    }
     phones.forEach(phone => {
         console.log(phone);
         const phonesDiv = document.createElement('div');
@@ -24,13 +31,24 @@ const displayPhones = phones=>{
         `;
         phonesContainer.appendChild(phonesDiv);
     })
+    // stop the loader spinner
+    toogleSpinner(false);
 }
 document.getElementById('btn-search').addEventListener('click', function(){
+    // start the loader spinner
+    toogleSpinner(true);
     const searchValue = document.getElementById('search-field');
     const searchText = searchValue.value;
     loadPhones(searchText);
     searchValue.value = '';
 
 })
-
-loadPhones();
+const toogleSpinner =isLoding=>{
+    const spinnerLoading = document.getElementById('spinnerLoder');
+    if(isLoding){
+        spinnerLoading.classList.remove('d-none');
+    }else{
+        spinnerLoading.classList.add('d-none');
+    }
+}
+loadPhones("sa");
