@@ -9,6 +9,13 @@ const displayPhones = phones=>{
     const phonesContainer = document.getElementById('phones-container');
     phonesContainer.textContent = '';
     // phonesContainer.innerText = ''; (it also same as textContent that give us emty value)
+    const showAll = document.getElementById('show-all');
+    if(phones.length > 10){
+        phones = phones.slice(0,5);
+        showAll.classList.remove('d-none');
+    }else{
+        showAll.classList.add('d-none');
+    }
     // warning massege
     const message = document.getElementById('warning-massege');
     if(phones.length === 0){
@@ -51,4 +58,4 @@ const toogleSpinner =isLoding=>{
         spinnerLoading.classList.add('d-none');
     }
 }
-loadPhones("sa");
+loadPhones();
